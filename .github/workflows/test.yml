@@ -5,18 +5,50 @@ on: [push]
 jobs:
   lint:
     runs-on: ubuntu-latest
+
+    services:
+      redis:
+        image: redis
+        ports:
+        - 6379/tcp
+
     steps:
     - uses: actions/checkout@{ref}
-    - uses: .github/workflows/environment.yml
+
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        version: 12.x
+
+    - name: npm install & build
+      run: |
+        npm install
+        npm run build --if-present
 
     - name: lint
       run: ./node_modules/.bin/standard
 
   test:
     runs-on: ubuntu-latest
+
+    services:
+      redis:
+        image: redis
+        ports:
+        - 6379/tcp
+
     steps:
     - uses: actions/checkout@{ref}
-    - uses: .github/workflows/environment.yml
+
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        version: 12.x
+
+    - name: npm install & build
+      run: |
+        npm install
+        npm run build --if-present
 
     - name: test
       run: ./node_modules/.bin/jest --ci
