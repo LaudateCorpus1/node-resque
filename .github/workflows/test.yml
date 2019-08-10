@@ -2,14 +2,17 @@ name: Test
 
 on: [push, pull_request]
 
-refrences:
-  common_services: &common_services
-    redis:
-      image: redis
-      ports:
-      - 6379/tcp
+jobs:
+  lint:
+    runs-on: ubuntu-latest
 
-  common_build_steps: &common_build_steps
+    services: &services
+      redis:
+        image: redis
+        ports:
+        - 6379/tcp
+
+    steps:
     - uses: actions/checkout@master
 
     - name: Use Node.js 12.x
@@ -22,15 +25,6 @@ refrences:
         npm install
         npm run build --if-present
 
-jobs:
-  lint:
-    runs-on: ubuntu-latest
-
-    services:
-      <<: *common_services
-
-    steps:
-    - *common_build_steps
     - name: lint
       run: ./node_modules/.bin/standard
 
@@ -40,9 +34,20 @@ jobs:
     needs: [lint]
 
     services:
-      <<: *common_services
+      <<: *services
 
     steps:
-    - *common_build_steps
+    - uses: actions/checkout@master
+
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        version: 12.x
+
+    - name: npm install & build
+      run: |
+        npm install
+        npm run build --if-present
+
     - name: test
       run: ./node_modules/.bin/jest --ci
