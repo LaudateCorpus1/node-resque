@@ -1,20 +1,20 @@
-name: Node CI
+name: Test
 
 on: [push]
 
 jobs:
-  build:
-
+  lint:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@master
-    - name: Use Node.js 10.x
-      uses: actions/setup-node@v1
-      with:
-        version: 10.x
-    - name: npm install, build, and test
-      run: |
-        npm install
-        npm run build --if-present
-        npm test
+    - uses: ./.github/actions/environment
+
+    - name: lint
+      run: ./node_modules/.bin/standard
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: ./.github/actions/environment
+
+    - name: test
+      run: ./node_modules/.bin/jest --ci
