@@ -1,6 +1,6 @@
 name: Test
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   lint:
@@ -13,7 +13,7 @@ jobs:
         - 6379/tcp
 
     steps:
-    - uses: actions/checkout
+    - uses: actions/checkout@${GITHUB_SHA}
 
     - name: Use Node.js 12.x
       uses: actions/setup-node@v1
@@ -38,7 +38,7 @@ jobs:
         - 6379/tcp
 
     steps:
-    - uses: actions/checkout
+    - uses: actions/checkout@${GITHUB_SHA}
 
     - name: Use Node.js 12.x
       uses: actions/setup-node@v1
