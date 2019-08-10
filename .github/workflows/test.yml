@@ -6,7 +6,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: ./.github/workflows/environment
+    - uses: actions/checkout@{ref}
+    - uses: .github/workflows/environment.yml
 
     - name: lint
       run: ./node_modules/.bin/standard
@@ -14,7 +15,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: ./.github/workflows/environment
+    - uses: actions/checkout@{ref}
+    - uses: .github/workflows/environment.yml
 
     - name: test
       run: ./node_modules/.bin/jest --ci

@@ -13,8 +13,6 @@ jobs:
         - 6379/tcp
 
     steps:
-    - uses: actions/checkout@{ref}
-
     - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
