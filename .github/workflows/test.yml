@@ -3,7 +3,7 @@ name: Test
 on: [push, pull_request]
 
 jobs:
-  lint:
+  lint-and-test:
     runs-on: ubuntu-latest
 
     services:
@@ -27,30 +27,6 @@ jobs:
 
     - name: lint
       run: ./node_modules/.bin/standard
-
-  test:
-    runs-on: ubuntu-latest
-
-    needs: [lint]
-
-    services:
-      redis:
-        image: redis
-        ports:
-        - 6379/tcp
-
-    steps:
-    - uses: actions/checkout@master
-
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        version: 12.x
-
-    - name: npm install & build
-      run: |
-        npm install
-        npm run build --if-present
 
     - name: test
       run: ./node_modules/.bin/jest --ci
