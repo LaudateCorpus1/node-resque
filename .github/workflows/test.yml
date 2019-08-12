@@ -9,6 +9,7 @@ jobs:
     services:
       redis:
         image: redis
+        id: redis
         ports:
         - 6379/tcp
 
