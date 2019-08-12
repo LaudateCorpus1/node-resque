@@ -33,7 +33,7 @@ describe('scheduler', () => {
       await scheduler.connect()
 
       scheduler.on('error', async (error) => {
-        expect(error.message).toMatch(/getaddrinfo ENOTFOUND/)
+        expect(error.message).toMatch(/getaddrinfo/)
         await scheduler.end()
         done()
       })

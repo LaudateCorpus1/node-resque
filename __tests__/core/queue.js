@@ -27,7 +27,7 @@ describe('queue', () => {
       queue.connect()
 
       queue.on('error', (error) => {
-        expect(error.message).toMatch(/getaddrinfo ENOTFOUND/)
+        expect(error.message).toMatch(/getaddrinfo/)
         queue.end()
         resolve()
       })

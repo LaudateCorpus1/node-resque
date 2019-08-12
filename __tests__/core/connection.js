@@ -29,7 +29,7 @@ describe('connection', () => {
       connection.connect()
 
       connection.on('error', (error) => {
-        expect(error.message).toMatch(/getaddrinfo ENOTFOUND/)
+        expect(error.message).toMatch(/getaddrinfo/)
         connection.end()
         resolve()
       })

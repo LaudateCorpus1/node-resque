@@ -63,7 +63,7 @@ describe('worker', () => {
     await worker.connect()
 
     worker.on('error', async (error) => {
-      expect(error.message).toMatch(/getaddrinfo ENOTFOUND/)
+      expect(error.message).toMatch(/getaddrinfo/)
       await worker.end()
       done()
     })
