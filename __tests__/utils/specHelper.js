@@ -4,18 +4,29 @@ const queue = 'test_queue'
 const pkg = 'ioredis'
 const NodeResque = require('../../index.js')
 
+let host = process.env.REDIS_HOST || '127.0.0.1'
+let port = process.env.REDIS_PORT || 6379
+const database = parseInt(process.env.REDIS_DB || process.env.JEST_WORKER_ID || 0)
+let password = process.env.REDIS_PASSWORD || null
+
+if (process.env.REDIS_URL) {
+  password = process.env.REDIS_URL.match(/redis:\/\/.*:(.*)@.*:\d*$/i)[1]
+  host = process.env.REDIS_URL.match(/redis:\/\/.*:.*@(.*):\d*$/i)[1]
+  port = parseInt(process.env.REDIS_URL.match(/redis:\/\/.*:.*@.*:(\d*)$/i)[1])
+}
+
 module.exports = {
   pkg: pkg,
-  namespace: namespace,
+  namespace,
   queue: queue,
   timeout: 500,
   connectionDetails: {
     pkg: pkg,
-    host: '127.0.0.1',
-    password: '',
-    port: 6379,
-    database: parseInt(process.env.JEST_WORKER_ID || 0),
-    namespace: namespace
+    host,
+    password,
+    port,
+    database,
+    namespace
     // looping: true
   },
 
