@@ -4,7 +4,7 @@ const queue = 'test_queue'
 const pkg = 'ioredis'
 const NodeResque = require('../../index.js')
 
-let host = process.env.REDIS_HOST || '127.0.0.1'
+let host = process.env.REDIS_HOST || 'localhost'
 let port = process.env.REDIS_PORT || 6379
 const database = parseInt(process.env.REDIS_DB || process.env.JEST_WORKER_ID || 0)
 let password = process.env.REDIS_PASSWORD || null
