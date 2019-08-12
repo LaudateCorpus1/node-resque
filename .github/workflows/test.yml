@@ -9,7 +9,6 @@ jobs:
     services:
       redis:
         image: redis
-        id: redis
         ports:
         - 6379/tcp
 
@@ -32,4 +31,4 @@ jobs:
       run: ./node_modules/.bin/jest --ci
       env:
       #   REDIS_HOST: redis
-        REDIS_PORT: ${{ jobs.services.redis.ports['6379'] }}
+        REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
